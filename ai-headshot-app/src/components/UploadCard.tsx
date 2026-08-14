@@ -1,6 +1,25 @@
 import { ImageIcon } from "lucide-react";
+import type { UploadStatus } from "../types";
 
-export default function UploadCard() {
+interface UploadCardProps {
+  uploadStatus: UploadStatus;
+  uploadError: string | null;
+  onUploadError: (error: Error) => void;
+  onUploadStart: () => void;
+}
+
+export default function UploadCard({
+    uploadStatus,
+    uploadError,
+    onUploadError,
+    onUploadStart,
+}: UploadCardProps) {
+  const uploadFile = async (file: File) => {
+    try {
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <section id="upload" className="px-4 py-12">
       <div className="mx-auto max-w-2xl">
