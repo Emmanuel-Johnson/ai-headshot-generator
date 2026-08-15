@@ -3,6 +3,8 @@ import type { UploadStatus } from "../types";
 import { useDropzone } from "react-dropzone";
 import { cn } from "../lib/utils";
 import { useState } from "react";
+import { uploadImageToCloudinary } from "../cloudinary/upload-direct";
+import type { CloudinaryUploadResult } from "../cloudinary/UploadWidget";
 
 const ACCEPT = {
   "image/jpeg": [".jpg", ".jpeg"],
@@ -15,6 +17,7 @@ interface UploadCardProps {
   uploadError: string | null;
   onUploadError: (error: Error) => void;
   onUploadStart: () => void;
+  onUploadSuccess: (result: CloudinaryUploadResult) => void;
 }
 
 export default function UploadCard({
@@ -22,12 +25,15 @@ export default function UploadCard({
   uploadError,
   onUploadError,
   onUploadStart,
+  onUploadSuccess,
 }: UploadCardProps) {
   const [progress, setProgress] = useState(0);
   const uploadFile = async (file: File) => {
     onUploadStart();
     setProgress(0);
     try {
+      const result = await uploadImageToCloudinary(file, setProgress);
+      onUploadSuccess(result);
     } catch (error) {
       onUploadError(new Error("Upload failed."));
     }
@@ -85,7 +91,7 @@ export default function UploadCard({
               <div>
                 <div></div>
               </div>
-              <p>Uploading...</p>
+              <p>Uploading... {progress > 0 ? `${progress}%` : ""}</p>
             </div>
           )}
         </div>

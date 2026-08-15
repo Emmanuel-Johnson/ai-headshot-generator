@@ -17,7 +17,8 @@ export default function Home() {
             uploadStatus={headshot.uploadStatus}
             uploadError={headshot.uploadError}
             onUploadError={headshot.handleUploadError}
-            onUploadStart={headshot.handleUploadStart}
+            onUploadStart={headshot.handleUploadStart} 
+            onUploadSuccess={headshot.handleUploadSuccess}
             />
         </div>
     )
