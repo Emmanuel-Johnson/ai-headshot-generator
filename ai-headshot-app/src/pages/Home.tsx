@@ -43,8 +43,12 @@ export default function Home() {
         <TranformationGrid
           title="AI Headshot Styles"
           presets={headshot.presetImages}
+          selectedPresetId={headshot.selectedPresetId}
+          onSelect={headshot.selectPreset}
         />
       )}
+
+
     </div>
   );
 }
