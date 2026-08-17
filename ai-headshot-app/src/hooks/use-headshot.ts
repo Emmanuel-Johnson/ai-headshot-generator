@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { UploadStatus } from "../types";
 import type { CloudinaryUploadResult } from "../cloudinary/UploadWidget";
-import { buildOriginalPreview } from "../lib/transformations";
+import { ALL_PRESETS, buildOriginalPreview } from "../lib/transformations";
 
 export function useHeadshot() {
   const [uploadStatus, setUploadStatus] = useState<UploadStatus>("idle");
@@ -36,6 +36,14 @@ export function useHeadshot() {
     return buildOriginalPreview(publicId);
   }, [publicId]);
 
+  const presetImages = useMemo(() => {
+    if (!publicId) return [];
+    return ALL_PRESETS.map((preset) => ({
+      preset,
+      image: preset.build(publicId),
+    }));
+  }, [publicId]);
+
   return {
     uploadError,
     uploadStatus,
@@ -43,5 +51,7 @@ export function useHeadshot() {
     handleUploadStart,
     handleUploadSuccess,
     originalImage,
+    presetImages,
+    hasUpload: Boolean(publicId),
   };
 }
