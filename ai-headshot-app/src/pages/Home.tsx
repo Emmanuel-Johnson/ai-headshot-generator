@@ -1,25 +1,42 @@
-import { Hero } from "../components/Hero"
-import UploadCard from "../components/UploadCard"
-import { useHeadshot } from "../hooks/use-headshot"
+import { AdvancedImage, placeholder } from "@cloudinary/react";
+import { Hero } from "../components/Hero";
+import UploadCard from "../components/UploadCard";
+import { useHeadshot } from "../hooks/use-headshot";
 
 export default function Home() {
-    const headshot = useHeadshot()
-    return (
-        <div className="min-h-screen">
-            <header className="border-b border-white/10 px-4 py-4">
-                <div className="text-lg font-bold">
-                    <span>AI <span className="text-indigo-400">Headshot</span></span>
-                </div>
-            </header>
-
-            <Hero />
-            <UploadCard 
-            uploadStatus={headshot.uploadStatus}
-            uploadError={headshot.uploadError}
-            onUploadError={headshot.handleUploadError}
-            onUploadStart={headshot.handleUploadStart} 
-            onUploadSuccess={headshot.handleUploadSuccess}
-            />
+  const headshot = useHeadshot();
+  return (
+    <div className="min-h-screen">
+      <header className="border-b border-white/10 px-4 py-4">
+        <div className="text-lg font-bold">
+          <span>
+            AI <span className="text-indigo-400">Headshot</span>
+          </span>
         </div>
-    )
+      </header>
+
+      <Hero />
+      <UploadCard
+        uploadStatus={headshot.uploadStatus}
+        uploadError={headshot.uploadError}
+        onUploadError={headshot.handleUploadError}
+        onUploadStart={headshot.handleUploadStart}
+        onUploadSuccess={headshot.handleUploadSuccess}
+      />
+
+      {headshot.originalImage && (
+        <section>
+          <div>
+            <h2>Original Upload</h2>
+            <AdvancedImage
+              cldImg={headshot.originalImage}
+              plugins={[placeholder({ mode: "blur" })]}
+              alt="Original Upload"
+              className="mx-auto rounded-xl shadow-lg"
+            />
+          </div>
+        </section>
+      )}
+    </div>
+  );
 }
