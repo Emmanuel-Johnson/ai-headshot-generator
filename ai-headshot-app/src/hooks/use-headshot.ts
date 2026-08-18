@@ -52,10 +52,11 @@ export function useHeadshot() {
   const selectedPreset = selectedPresetId
     ? (getPresetById(selectedPresetId) ?? null)
     : null;
-  
-  const selectedImage: CloudinaryImage | null = useMemo(() => {
 
-  }, [publicId, selectedPreset])
+  const selectedImage: CloudinaryImage | null = useMemo(() => {
+    if (!publicId || !selectedPreset) return null;
+    return selectedPreset.build(publicId);
+  }, [publicId, selectedPreset]);
 
   return {
     uploadError,
@@ -68,5 +69,8 @@ export function useHeadshot() {
     hasUpload: Boolean(publicId),
     selectPreset: setSelectedPresetId,
     selectedPresetId,
+    selectedImage,
+    selectedPreset,
+    publicId,
   };
 }

@@ -3,6 +3,8 @@ import { Hero } from "../components/Hero";
 import UploadCard from "../components/UploadCard";
 import { useHeadshot } from "../hooks/use-headshot";
 import TranformationGrid from "../components/TransformationGrid";
+import ResultPreview from "../components/ResultPreview";
+import ExportActions from "../components/ExportActions";
 
 export default function Home() {
   const headshot = useHeadshot();
@@ -47,8 +49,20 @@ export default function Home() {
           onSelect={headshot.selectPreset}
         />
       )}
+      {headshot.hasUpload && (
+        <ResultPreview
+          originalImage={headshot.originalImage}
+          selectedImage={headshot.selectedImage}
+          selectedPreset={headshot.selectedPreset}
+        />
+      )}
 
-
+      {headshot.hasUpload && headshot.publicId && headshot.selectedPreset && (
+        <ExportActions
+          publidId={headshot.publicId}
+          selectedPreset={headshot.selectedPreset}
+        />
+      )}
     </div>
   );
 }
