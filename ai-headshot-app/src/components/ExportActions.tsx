@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { ExportFormat, HeadshotPreset } from "../types";
 import { cn } from "../lib/utils";
 import { Check, Copy, Download, ExternalLink, Loader2 } from "lucide-react";
+import { getExportUrl } from "../lib/transformations";
 
 interface ExportActionsProps {
   publicId: string;
@@ -86,6 +87,7 @@ export default function ExportActions({
         <p className="mb-6 text-center text-sm text-white/50">
           Pick a format and download your headshot
         </p>
+
         <div className="mb-6 flex justify-center gap-2">
           {FORMATS.map((f) => (
             <button
@@ -103,6 +105,7 @@ export default function ExportActions({
             </button>
           ))}
         </div>
+
         <div className="flex flex-wrap justify-center gap-3">
           <button
             type="button"
@@ -140,11 +143,11 @@ export default function ExportActions({
             {copied ? "Copied!" : "Copy URL"}
           </button>
         </div>
+
+        {error && (
+          <p className="mt-4 text-center text-sm text-red-400">{error}</p>
+        )}
       </div>
     </section>
   );
 }
-function getExportUrl(publicId: string, selectedPreset: HeadshotPreset, format: string): string {
-    throw new Error("Function not implemented.");
-}
-

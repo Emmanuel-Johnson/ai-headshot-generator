@@ -1,4 +1,4 @@
-import { AdvancedImage, placeholder } from "@cloudinary/react";
+import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
 import { Hero } from "../components/Hero";
 import UploadCard from "../components/UploadCard";
 import { useHeadshot } from "../hooks/use-headshot";
@@ -27,13 +27,13 @@ export default function Home() {
         onUploadSuccess={headshot.handleUploadSuccess}
       />
 
-      {headshot.hasUpload && headshot.originalImage && (
-        <section>
-          <div>
-            <h2>Original Upload</h2>
+{headshot.hasUpload && headshot.originalImage && (
+        <section className="px-4 py-8">
+          <div className="mx-auto max-w-md text-center">
+            <h2 className="mb-4 text-xl font-semibold">Original Upload</h2>
             <AdvancedImage
               cldImg={headshot.originalImage}
-              plugins={[placeholder({ mode: "blur" })]}
+              plugins={[placeholder({ mode: "blur" }), lazyload()]}
               alt="Original Upload"
               className="mx-auto rounded-xl shadow-lg"
             />
@@ -59,7 +59,7 @@ export default function Home() {
 
       {headshot.hasUpload && headshot.publicId && headshot.selectedPreset && (
         <ExportActions
-          publidId={headshot.publicId}
+          publicId={headshot.publicId}
           selectedPreset={headshot.selectedPreset}
         />
       )}

@@ -25,7 +25,7 @@ export const HEADSHOT_PRESETS: HeadshotPreset[] = [
   {
     id: "corporate-executive",
     name: "Corporate Executive",
-    description: "Navy suit with office backdrop -- LinkedIn ready",
+    description: "Navy suit with office backdrop — LinkedIn ready",
     category: "style",
     build: (publicId) =>
       finalizeImage(
